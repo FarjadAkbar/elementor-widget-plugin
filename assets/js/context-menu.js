@@ -1,23 +1,10 @@
 window.addEventListener('elementor/init', () => {
 
-    // const currentPageURL = elementor.documents.currentDocument.config.urls.permalink;
-
-    // const pageSpeedURL = `https://developers.google.com/speed/pagespeed/insights/?url=${currentPageURL}&tab=desktop`;
-
     function a(b) {
         return b.forEach(function (b) {
             b.id = elementorCommon.helpers.getUniqueId(), 0 < b.elements.length && a(b.elements)
         }), b
     }
-
-    function StoreCP(localST, callback) {
-        callback(localST, callback);
-    }
-
-    // localStorage.init({
-    //     iframeUrl: "https://leap13.github.io/pa-cdcp/",
-    //     initCallback: function () { }
-    // });
 
 
     CrossCopyPasteHandler = {
@@ -109,6 +96,11 @@ window.addEventListener('elementor/init', () => {
         }
     }
 
+    xdLocalStorage.init({
+        iframeUrl: "https://leap13.github.io/pa-cdcp/",
+        initCallback: function () { }
+    });
+
     const elTypes = ['widget', 'column', 'section'];
     d = [];
     // Google PageSpeed action object
@@ -127,14 +119,11 @@ window.addEventListener('elementor/init', () => {
                         a.eletype = "widget" == elTypes[e] ? f.model.get("widgetType") : null;
                         a.elecode = f.model.toJSON();
 
-                        StoreCP(
-                            localStorage.setItem("fa-cp-element", JSON.stringify(a)),
-                            () => {
-                                elementor.notifications.showToast({
-                                    message: elementor.translate('Copied')
-                                });
-                            }
-                        );
+                        xdLocalStorage.setItem("fa-c-p-element", JSON.stringify(a), function () {
+                            elementor.notifications.showToast({
+                                message: elementor.translate('Copied')
+                            });
+                        });
                         // localStorage.setItem("fa-cp-element", JSON.stringify(a));
                     },
                 },
@@ -143,16 +132,10 @@ window.addEventListener('elementor/init', () => {
                     icon: 'eicon-pate',
                     title: 'FA | Paste Element',
                     isEnabled: () => true,
-                    callback: () => {
-                        StoreCP(
-                            a = localStorage.getItem("fa-cp-element"),
-                            () => {
-                                CrossCopyPasteHandler.b(JSON.parse(a.value), f)
-                            }
-                        );
-                        // localStorage.getItem("fa-cp-element", () => {
-                        //     CrossCopyPasteHandler.b(JSON.parse(a.value), f)
-                        // });
+                    callback: function () {
+                        xdLocalStorage.getItem("fa-c-p-element", function (a) {
+                            PACopyPasteHandler.b(JSON.parse(a.value), f)
+                        })
                     },
                 },
 

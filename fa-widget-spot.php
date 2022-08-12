@@ -32,6 +32,14 @@ define('FA_SPOT_STABLE_VERSION', '4.9.22');
 function elementor_page_speed_context_menu_scripts()
 {
     wp_enqueue_script(
+        'elementor-storage',
+        plugins_url('assets/js/xdlocalstorage.js', FA_SPOT_FILE),
+        array('jquery'),
+        '1.0.0',
+        false
+    );
+
+    wp_enqueue_script(
         'elementor-page-speed-context-menu',
         plugins_url('assets/js/context-menu.js', FA_SPOT_FILE),
         array('jquery'),
