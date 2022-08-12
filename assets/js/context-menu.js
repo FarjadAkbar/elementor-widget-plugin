@@ -134,7 +134,7 @@ window.addEventListener('elementor/init', () => {
                     isEnabled: () => true,
                     callback: function () {
                         xdLocalStorage.getItem("fa-c-p-element", function (a) {
-                            PACopyPasteHandler.b(JSON.parse(a.value), f)
+                            CrossCopyPasteHandler.b(JSON.parse(a.value), f)
                         })
                     },
                 },
